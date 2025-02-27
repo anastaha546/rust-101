@@ -1,10 +1,12 @@
 use std::str::FromStr;
 
 
-#[derive(Debug)]pub struct Task {
+#[derive(Debug)]
+pub struct Task {
     pub id: i32,
     pub title: String,
     pub status: TaskStatus,
+    pub description: String,
 }
 
 #[derive(Debug)]

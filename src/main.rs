@@ -1,8 +1,8 @@
 mod models;
 use models::{Task, TaskStatus};
-use std::io::{stdin, stdout};
+use std::io::{stdin, stdout,self,Write};
 use std::str::FromStr;
-use std::io::{self, Write};
+use rand::Rng;
 
 
 
@@ -34,8 +34,8 @@ fn view_tasks(tasks: &Vec<Task>) {
         println!("No tasks available.");
     } else {
         println!("Your tasks:");
-        for (index, task) in tasks.iter().enumerate() {
-            println!("{}. {} - {:?}", index + 1, task.title, task.status);
+        for task in tasks.iter() {
+            println!("{}. {} - {:?} - {}", task.id, task.title, task.status, task.description);
         }
     }
 }
@@ -77,10 +77,15 @@ fn new_task(tasks: &mut Vec<Task>){
         }
     };
 
+    let mut description = String::new();
+    println!("Enter task description");
+    io::stdin().read_line(&mut description).expect("Failed to read task description :( ");
+
     let new_task = Task {
-        id: (tasks.len() as i32)+1,
+        id:  rand::thread_rng().gen_range(100000..=999999),
         title: title.trim().to_string(),
         status,
+        description
         };
     tasks.push(new_task);
 }
